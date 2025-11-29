@@ -1,10 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8" />
     <title>称骨小程序</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PWA：触发 service worker -->
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
 
     <style>
         body {
@@ -67,18 +74,27 @@
     <div id="result"></div>
 
     <script src="db.js"></script>
-    <script src="logic.js?v=1"></script>
+    <script src="logic.js"></script>
 
     <script>
+        // 动态生成下拉选项
         const y = document.getElementById("year");
         const m = document.getElementById("month");
         const d = document.getElementById("day");
         const h = document.getElementById("hour");
 
-        for (let i = 1900; i <= 2030; i++) y.innerHTML += `<option value="${i}">${i}</option>`;
-        for (let i = 1; i <= 12; i++) m.innerHTML += `<option value="${i}">${i}</option>`;
-        for (let i = 1; i <= 31; i++) d.innerHTML += `<option value="${i}">${i}</option>`;
-        for (let i = 0; i <= 23; i++) h.innerHTML += `<option value="${i}">${i} 点</option>`;
+        for (let i = 1900; i <= 2030; i++) {
+            y.innerHTML += `<option value="${i}">${i}</option>`;
+        }
+        for (let i = 1; i <= 12; i++) {
+            m.innerHTML += `<option value="${i}">${i}</option>`;
+        }
+        for (let i = 1; i <= 31; i++) {
+            d.innerHTML += `<option value="${i}">${i}</option>`;
+        }
+        for (let i = 0; i <= 23; i++) {
+            h.innerHTML += `<option value="${i}">${i} 点</option>`;
+        }
     </script>
 </body>
 </html>
