@@ -8,10 +8,13 @@
     <!-- PWA：触发 service worker -->
     <link rel="manifest" href="manifest.json">
     <script>
+        // 暂停注册 service worker，避免远程残留旧缓存导致按钮无响应
+        /*
         if ('serviceWorker' in navigator) {
-            const swUrl = `service-worker.js?v=2024-11-29-3`;
+            const swUrl = `service-worker.js?v=2024-11-30-1`;
             navigator.serviceWorker.register(swUrl);
         }
+        */
     </script>
 
     <style>
@@ -76,13 +79,19 @@
 
     <script>
         // 每次发布改下版本号，便于缓存刷新/排查
-        const APP_VERSION = "2024-11-29-3";
+        const APP_VERSION = "2024-11-30-1";
     </script>
-    <script src="db.js?v=2024-11-29-3"></script>
-    <script src="logic.js?v=2024-11-29-3"></script>
+    <script src="db.js?v=2024-11-30-1"></script>
+    <script src="logic.js?v=2024-11-30-1"></script>
 
     <script>
         document.getElementById("version").textContent = APP_VERSION;
+        // 如果主函数缺失，提示用户刷新
+        window.addEventListener("load", () => {
+            if (typeof calculate !== "function") {
+                alert("脚本未加载，请刷新页面或清理缓存后重试。版本：" + APP_VERSION);
+            }
+        });
         // 动态生成下拉选项
         const y = document.getElementById("year");
         const m = document.getElementById("month");
