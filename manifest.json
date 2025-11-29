@@ -1,0 +1,9 @@
+{
+  "name": "称骨小程序",
+  "short_name": "称骨小程序",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": []
+}
