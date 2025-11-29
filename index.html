@@ -1,1 +1,84 @@
 
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <title>称骨小程序</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { font-size: 24px; margin-bottom: 10px; }
+        label { display: block; margin-top: 15px; font-weight: 600; }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+            border-radius: 6px;
+        }
+        button {
+            background: #007AFF;
+            color: white;
+            margin-top: 20px;
+            border: none;
+        }
+        .result-block {
+            background: #f2f2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .bone-title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        pre {
+            white-space: pre-wrap;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>称骨小程序</h1>
+
+    <label>阳历：年份</label>
+    <select id="year"></select>
+
+    <label>阳历：月份</label>
+    <select id="month"></select>
+
+    <label>阳历：日</label>
+    <select id="day"></select>
+
+    <label>出生小时（0–23）</label>
+    <select id="hour">
+        <option value="unknown">不知道时辰</option>
+    </select>
+
+    <button onclick="calculate()">开始计算</button>
+
+    <div id="result"></div>
+
+    <script src="db.js"></script>
+    <script src="logic.js?v=1"></script>
+
+    <script>
+        const y = document.getElementById("year");
+        const m = document.getElementById("month");
+        const d = document.getElementById("day");
+        const h = document.getElementById("hour");
+
+        for (let i = 1900; i <= 2030; i++) y.innerHTML += `<option value="${i}">${i}</option>`;
+        for (let i = 1; i <= 12; i++) m.innerHTML += `<option value="${i}">${i}</option>`;
+        for (let i = 1; i <= 31; i++) d.innerHTML += `<option value="${i}">${i}</option>`;
+        for (let i = 0; i <= 23; i++) h.innerHTML += `<option value="${i}">${i} 点</option>`;
+    </script>
+</body>
+</html>
