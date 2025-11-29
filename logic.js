@@ -28,6 +28,12 @@ function hourToShichen(hour) {
 //
 // 传统黄历转换算法，支持 1900–2100
 //
+// 把输入日期当作“中国时区的当天 00:00”，避免受设备时区影响
+function chinaMidnightTimestamp(y, m, d) {
+    const UTC8_OFFSET = 8 * 60 * 60 * 1000;
+    return Date.UTC(y, m - 1, d) - UTC8_OFFSET;
+}
+
 function solarToLunar(y, m, d) {
     // 农历数据
     const lunarInfo = [
@@ -53,9 +59,10 @@ function solarToLunar(y, m, d) {
     ];
 
     let total, offset, days, leap, temp = 0;
-    const baseDate = new Date(1900,0,31);
-    const objDate = new Date(y, m - 1, d);
-    offset = (objDate - baseDate) / 86400000;
+    // 以中国时区的 1900-01-31 00:00 为基准，避免受设备时区/DST 干扰
+    const baseDate = chinaMidnightTimestamp(1900, 1, 31);
+    const objDate = chinaMidnightTimestamp(y, m, d);
+    offset = Math.floor((objDate - baseDate) / 86400000);
 
     let i = 1900;
     for (; i < 2101 && offset > 0; i++) {
@@ -126,7 +133,10 @@ function numToChinese(n) {
 function convertMoney(totalQian) {
     const liang = Math.floor(totalQian / 10);
     const qian = totalQian % 10;
-    return `${numToChinese(liang)}两${numToChinese(qian)}钱`;
+    // bonePoem 数据中，整两的键没有“零钱”二字，因此零钱为 0 时直接返回“X两”
+    return qian === 0
+        ? `${numToChinese(liang)}两`
+        : `${numToChinese(liang)}两${numToChinese(qian)}钱`;
 }
 
 // ========== 5. 计算骨重 ==========

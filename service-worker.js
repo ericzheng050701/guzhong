@@ -1,6 +1,7 @@
 // service-worker.js — 离线缓存支持
 
-const CACHE_NAME = "bone-weight-cache-v1";
+// 每次发布版本时更新缓存名称，确保用户拿到最新脚本
+const CACHE_NAME = "bone-weight-cache-v5";
 const FILES_TO_CACHE = [
     "./",
     "./index.html",

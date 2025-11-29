@@ -9,7 +9,8 @@
     <link rel="manifest" href="manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js');
+            const swUrl = `service-worker.js?v=2024-11-29-3`;
+            navigator.serviceWorker.register(swUrl);
         }
     </script>
 
@@ -53,7 +54,7 @@
 </head>
 
 <body>
-    <h1>称骨小程序</h1>
+    <h1>称骨小程序 <small id="version"></small></h1>
 
     <label>阳历：年份</label>
     <select id="year"></select>
@@ -73,10 +74,15 @@
 
     <div id="result"></div>
 
-    <script src="db.js"></script>
-    <script src="logic.js"></script>
+    <script>
+        // 每次发布改下版本号，便于缓存刷新/排查
+        const APP_VERSION = "2024-11-29-3";
+    </script>
+    <script src="db.js?v=2024-11-29-3"></script>
+    <script src="logic.js?v=2024-11-29-3"></script>
 
     <script>
+        document.getElementById("version").textContent = APP_VERSION;
         // 动态生成下拉选项
         const y = document.getElementById("year");
         const m = document.getElementById("month");
